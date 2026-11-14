@@ -5,7 +5,7 @@ import numpy as np
 from Qunatizer import Quantizer
 
 
-class Quantizer_Test(unittest.TestCase): # AI generated
+class Quantizer_Test(unittest.TestCase):
 
 
     def test_valid_int8_limits(self):
@@ -15,12 +15,7 @@ class Quantizer_Test(unittest.TestCase): # AI generated
 
 
     def test_invalid_int8_limits(self):
-        invalid_ranges = [
-            (-129, 127),
-            (-128, 128),
-            (10, 10),
-            (100, -100)
-        ]
+        invalid_ranges = [(-129, 127), (-128, 128), (10, 10), (100, -100)]
 
         for q_min, q_max in invalid_ranges:
             with self.subTest(q_min=q_min, q_max=q_max):
@@ -42,18 +37,14 @@ class Quantizer_Test(unittest.TestCase): # AI generated
         q = Quantizer([-1.0, 0.0, 1.0])
         q.symmetric_calibrate()
 
-        self.assertAlmostEqual(
-            q.symmetric_scale, 1.0 / 127
-        )
+        self.assertAlmostEqual(q.symmetric_scale, 1.0 / 127)
 
 
     def test_symmetric_custom_limits(self):
         q = Quantizer([-2.0, 0.0, 2.0], -100, 100)
         q.symmetric_calibrate()
 
-        self.assertAlmostEqual(
-            q.symmetric_scale, 2.0 / 100
-        )
+        self.assertAlmostEqual(q.symmetric_scale, 2.0 / 100)
 
 
     def test_symmetric_rejects_asymmetric_limits(self):
@@ -78,9 +69,7 @@ class Quantizer_Test(unittest.TestCase): # AI generated
 
         expected_scale = 2.5 / 255
 
-        self.assertAlmostEqual(
-            q.asymmetric_scale, expected_scale
-        )
+        self.assertAlmostEqual(q.asymmetric_scale, expected_scale)
 
 
     def test_asymmetric_zero_point(self):
@@ -133,18 +122,11 @@ class Quantizer_Test(unittest.TestCase): # AI generated
 
 
     def test_asymmetric_quantization(self): # Asymmetric quantization tests
-        q = Quantizer(
-            [-0.5, 0.1, 0.5, 2.0],
-            -128,
-            127
-        )
+        q = Quantizer([-0.5, 0.1, 0.5, 2.0], -128, 127)
 
         result = q.asymmetric_quantize()
 
-        expected = np.array(
-            [-128, -67, -26, 127],
-            dtype=np.int8
-        )
+        expected = np.array([-128, -67, -26, 127], dtype=np.int8)
 
         np.testing.assert_array_equal(result, expected)
 

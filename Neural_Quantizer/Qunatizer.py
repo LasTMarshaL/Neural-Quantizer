@@ -6,6 +6,7 @@ class Quantizer:
 
     def __init__(self, data, q_min=-127, q_max=127):
         input_data = np.asarray(data, dtype=np.float32)
+
         if not np.all(np.isfinite(input_data)):
             raise ValueError("Input contains NaN or Inf!")
         
@@ -49,8 +50,7 @@ class Quantizer:
             self.symmetric_calibrate()
 
         q = np.clip(np.round(self.data / self.symmetric_scale), self.q_min, self.q_max)
-        self.symmetric_quantized = q.astype(np.int8)
-        return self.symmetric_quantized
+        return q.astype(np.int8)
 
 
     def asymmetric_quantize(self):
@@ -58,5 +58,4 @@ class Quantizer:
             self.asymmetric_calibrate()
     
         q = np.clip(np.round(self.data / self.asymmetric_scale) + self.zero_point, self.q_min, self.q_max)
-        self.asymmetric_quantized = q.astype(np.int8)
-        return self.asymmetric_quantized
+        return q.astype(np.int8)
