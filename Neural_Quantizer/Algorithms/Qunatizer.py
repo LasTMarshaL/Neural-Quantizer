@@ -7,14 +7,8 @@ class Quantizer:
     def __init__(self, data, q_min=-127, q_max=127):
         input_data = np.asarray(data, dtype=np.float32)
 
-        if self.data.size == 0:
-            raise ValueError("Input data cannot be empty!")
-
-        if not np.issubdtype(input_data.dtype, np.number):
-            raise ValueError("Input data must contain numeric values!")
-        
         if not np.all(np.isfinite(input_data)):
-            raise ValueError("Input data contains NaN or Inf!")
+            raise ValueError("Input contains NaN or Inf!")
         
         if not (-128 <= q_min < q_max <= 127):
             raise ValueError("Invalid INT8 quantization range!")
@@ -30,6 +24,9 @@ class Quantizer:
 
 
     def symmetric_calibrate(self):
+        if self.data.size == 0:
+            raise ValueError("Input data cannot be empty!")
+
         if -self.q_min != self.q_max:
             raise ValueError("Symmetric quantization requires symmetric limits!")
         
@@ -38,6 +35,9 @@ class Quantizer:
 
 
     def asymmetric_calibrate(self):
+        if self.data.size == 0:
+            raise ValueError("Input data cannot be empty!")
+            
         max_value = np.max(self.data)
         min_value = np.min(self.data)
         self.asymmetric_scale = (max_value - min_value) / (self.q_max - self.q_min) if min_value != max_value else 1.0
