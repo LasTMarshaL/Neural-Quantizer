@@ -8,7 +8,7 @@ from Qunatizer import Quantizer
 class Quantizer_Test(unittest.TestCase):
 
 
-    def test_valid_int8_limits(self):
+    def test_valid_int8_limits(self): # Input validation
         q = Quantizer([1.0, 2.0], -128, 127)
         self.assertEqual(q.q_min, -128)
         self.assertEqual(q.q_max, 127)
@@ -23,9 +23,19 @@ class Quantizer_Test(unittest.TestCase):
                     Quantizer([1.0], q_min, q_max)
 
 
+    def test_empty_input(self):
+        with self.assertRaises(ValueError):
+             Quantizer([])
+
+
     def test_nan_input(self):
         with self.assertRaises(ValueError):
             Quantizer([1.0, np.nan, 2.0])
+
+
+    def test_non_numeric_input(self):
+        with self.assertRaises(ValueError):
+            Quantizer(["a", "b", "c"], 0.1, 0)
 
 
     def test_inf_input(self):
@@ -159,20 +169,6 @@ class Quantizer_Test(unittest.TestCase):
 
         self.assertTrue(np.all(result >= q.q_min))
         self.assertTrue(np.all(result <= q.q_max))
-
-
-    def test_empty_symmetric_data(self): # Empty data tests
-        q = Quantizer([])
-
-        with self.assertRaises(ValueError):
-            q.symmetric_quantize()
-
-
-    def test_empty_asymmetric_data(self):
-        q = Quantizer([])
-
-        with self.assertRaises(ValueError):
-            q.asymmetric_quantize()
 
 
     def test_random_data(self): # Random data tests
