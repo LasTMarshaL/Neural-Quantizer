@@ -8,7 +8,7 @@ class Dequantizer:
         input_data = np.asarray(quantized_data)
 
         if input_data.size == 0:
-            raise ValueError("Quantized  data cannot be empty!")
+            raise ValueError("Quantized data cannot be empty!")
 
         if not np.issubdtype(input_data.dtype, np.number):
             raise TypeError("Quantized data must contain numeric values!")
@@ -19,7 +19,7 @@ class Dequantizer:
         if not np.all(np.isfinite(input_data)):
             raise ValueError("Quantized contains NaN or Inf!")
 
-        if not np.all(input_data == np.round(input_data)):
+        if not np.issubdtype(input_data.dtype, np.integer):
             raise TypeError("Quantized data must contain integers!")
 
         if np.any((input_data < -128) | (input_data > 127)):
@@ -35,7 +35,7 @@ class Dequantizer:
             raise TypeError("Zero-point must be an integer!")
 
         if not -128 <= zero_point <= 127:
-            raise ValueError("Zero-point exceeds INT8 range!")
+            raise ValueError("Zero point must be in INT8 range!")
 
         self.quantized_data = input_data.astype(np.int8)
         self.scale = float(scale)
