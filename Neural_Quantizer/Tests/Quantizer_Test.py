@@ -2,7 +2,7 @@ import unittest
 import numpy as np
 
 
-from Qunatizer import Quantizer
+from Algorithms.Quantizer import Quantizer
 
 
 class Quantizer_Test(unittest.TestCase):
@@ -28,13 +28,12 @@ class Quantizer_Test(unittest.TestCase):
              Quantizer([])
 
 
-    def test_nan_input(self):
-        with self.assertRaises(ValueError):
-            Quantizer([1.0, np.nan, 2.0])
-
+    def test_complex_values(self):
+        with self.assertRaises((TypeError)):
+            Quantizer([1.0 + 2j], [1.0 + 2j])
 
     def test_non_numeric_input(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(TypeError):
             Quantizer(["a", "b", "c"], 0.1, 0)
 
 

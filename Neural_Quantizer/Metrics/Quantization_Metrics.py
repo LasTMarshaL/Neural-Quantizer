@@ -1,11 +1,11 @@
 import numpy as np
 
 
-class QuantizationMetrics:
+class Quantization_Metrics:
 
         def __init__(self, original_data, restored_data):
-            input_original_data = np.asarray(original_data, dtype=np.float32)
-            input_restored_data = np.asarray(restored_data, dtype=np.float32)
+            input_original_data = np.asarray(original_data)
+            input_restored_data = np.asarray(restored_data)
 
             if input_original_data.size == 0 or input_restored_data.size == 0:
                 raise ValueError("Input data cannot be empty!")
@@ -22,8 +22,8 @@ class QuantizationMetrics:
             if not np.all(np.isfinite(input_original_data)) or not np.all(np.isfinite(input_restored_data)):
                 raise ValueError("Original data contains NaN or Inf!")
 
-            self.original_data = input_original_data
-            self.restored_data = input_restored_data
+            self.original_data = input_original_data.astype(np.float32)
+            self.restored_data = input_restored_data.astype(np.float32)
             self.error = self.original_data - self.restored_data
 
              

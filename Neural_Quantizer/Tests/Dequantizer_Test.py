@@ -2,10 +2,84 @@ import unittest
 import numpy as np
 
 
-from Dequantizer import Dequantizer
+from Algorithms.Dequantizer import Dequantizer
 
 
 class Dequantizer_Test(unittest.TestCase):
+
+
+    def test_empty_input(self): # Input Validation
+        with self.assertRaises(ValueError):
+            Dequantizer([], 0.1, 0)
+
+
+    def test_non_numeric_input(self):
+        with self.assertRaises(TypeError):
+            Dequantizer(["a", "b", "c"], 0.1, 0)
+
+
+    def test_complex_values(self):
+        with self.assertRaises((TypeError)):
+            Dequantizer([1.0 + 2j], [1.0 + 2j])
+
+
+    def test_nan_input(self):
+        with self.assertRaises(ValueError):
+            Dequantizer([1, np.nan, 3], 0.1, 0)
+
+
+    def test_inf_input(self):
+        with self.assertRaises(ValueError):
+            Dequantizer([1, np.inf, 3], 0.1, 0)
+
+    def test_non_integer_values(self):
+        with self.assertRaises(TypeError):
+            Dequantizer([1.5, 2.5, 3.5], 0.1, 0)
+
+
+    def test_out_of_int8_range(self):
+        with self.assertRaises(ValueError):
+            Dequantizer([-129, 128], 0.1, 0)
+
+
+    def test_zero_scale(self): # Scale Validation
+        with self.assertRaises(ValueError):
+            Dequantizer([1, 2, 3], 0, 0)
+
+
+    def test_negative_scale(self):
+        with self.assertRaises(ValueError):
+            Dequantizer([1, 2, 3], -0.1, 0)
+
+
+    def test_nan_scale(self):
+        with self.assertRaises(ValueError):
+            Dequantizer([1, 2, 3], np.nan, 0)
+
+
+    def test_inf_scale(self):
+        with self.assertRaises(ValueError):
+            Dequantizer([1, 2, 3], np.inf, 0)
+
+
+    def test_non_numeric_scale(self):
+        with self.assertRaises(TypeError):
+            Dequantizer([1, 2, 3], "scale", 0)
+
+
+    def test_non_integer_zero_point(self): # Zero-point Validation
+        with self.assertRaises(TypeError):
+            Dequantizer([1, 2, 3], 0.1, 1.5)
+
+
+    def test_out_of_range_zero_point(self):
+        with self.assertRaises(ValueError):
+            Dequantizer([1, 2, 3], 0.1, 128)
+
+
+    def test_negative_out_of_range_zero_point(self):
+        with self.assertRaises(ValueError):
+            Dequantizer([1, 2, 3], 0.1, -129)
 
 
     def test_symmetric_basic(self): # Symmetric Dequantization
@@ -90,76 +164,6 @@ class Dequantizer_Test(unittest.TestCase):
         expected = np.array([0.0, 255.0], dtype=np.float32)
 
         np.testing.assert_array_equal(result, expected)
-
-
-    def test_empty_input(self): # Input Validation
-        with self.assertRaises(ValueError):
-            Dequantizer([], 0.1, 0)
-
-
-    def test_nan_input(self):
-        with self.assertRaises(ValueError):
-            Dequantizer([1, np.nan, 3], 0.1, 0)
-
-
-    def test_inf_input(self):
-        with self.assertRaises(ValueError):
-            Dequantizer([1, np.inf, 3], 0.1, 0)
-
-
-    def test_non_numeric_input(self):
-        with self.assertRaises(ValueError):
-            Dequantizer(["a", "b", "c"], 0.1, 0)
-
-
-    def test_non_integer_values(self):
-        with self.assertRaises(ValueError):
-            Dequantizer([1.5, 2.5, 3.5], 0.1, 0)
-
-
-    def test_out_of_int8_range(self):
-        with self.assertRaises(ValueError):
-            Dequantizer([-129, 128], 0.1, 0)
-
-
-    def test_zero_scale(self): # Scale Validation
-        with self.assertRaises(ValueError):
-            Dequantizer([1, 2, 3], 0, 0)
-
-
-    def test_negative_scale(self):
-        with self.assertRaises(ValueError):
-            Dequantizer([1, 2, 3], -0.1, 0)
-
-
-    def test_nan_scale(self):
-        with self.assertRaises(ValueError):
-            Dequantizer([1, 2, 3], np.nan, 0)
-
-
-    def test_inf_scale(self):
-        with self.assertRaises(ValueError):
-            Dequantizer([1, 2, 3], np.inf, 0)
-
-
-    def test_non_numeric_scale(self):
-        with self.assertRaises(ValueError):
-            Dequantizer([1, 2, 3], "scale", 0)
-
-
-    def test_non_integer_zero_point(self): # Zero-point Validation
-        with self.assertRaises(ValueError):
-            Dequantizer([1, 2, 3], 0.1, 1.5)
-
-
-    def test_out_of_range_zero_point(self):
-        with self.assertRaises(ValueError):
-            Dequantizer([1, 2, 3], 0.1, 128)
-
-
-    def test_negative_out_of_range_zero_point(self):
-        with self.assertRaises(ValueError):
-            Dequantizer([1, 2, 3], 0.1, -129)
 
 
 if __name__ == "__main__":

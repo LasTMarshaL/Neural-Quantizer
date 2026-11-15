@@ -5,31 +5,34 @@ class Dequantizer:
 
 
     def __init__(self, quantized_data, scale, zero_point=0):
-        input_data = np.asarray(quantized_data, np.int8)
+        input_data = np.asarray(quantized_data)
 
         if input_data.size == 0:
             raise ValueError("Quantized  data cannot be empty!")
 
         if not np.issubdtype(input_data.dtype, np.number):
-            raise ValueError("Quantized data must contain numeric values!")
+            raise TypeError("Quantized data must contain numeric values!")
 
+        if np.iscomplexobj(input_data):
+            raise TypeError("Complex numbers are not supported!")
+        
         if not np.all(np.isfinite(input_data)):
             raise ValueError("Quantized contains NaN or Inf!")
 
         if not np.all(input_data == np.round(input_data)):
-            raise ValueError("Quantized data must contain integers!")
+            raise TypeError("Quantized data must contain integers!")
 
         if np.any((input_data < -128) | (input_data > 127)):
             raise ValueError("Quantized data exceeds INT8 range!")
 
         if not isinstance(scale, (int, float, np.integer, np.floating)):
-            raise ValueError("Scale must be numeric!")
+            raise TypeError("Scale must be numeric!")
 
         if not np.isfinite(scale) or scale <= 0:
             raise ValueError("Scale must be finite and positive!")
 
         if not isinstance(zero_point, (int, np.integer)):
-            raise ValueError("Zero-point must be an integer!")
+            raise TypeError("Zero-point must be an integer!")
 
         if not -128 <= zero_point <= 127:
             raise ValueError("Zero-point exceeds INT8 range!")
