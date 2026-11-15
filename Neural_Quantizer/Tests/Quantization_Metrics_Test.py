@@ -43,9 +43,7 @@ class Quantization_Metrics_Test(unittest.TestCase):
 
 
     def test_mae(self): # MAE tests
-        original = [1.0, 2.0, 3.0, 4.0]
-        restored = [1.1, 1.8, 3.2, 3.9]
-        metrics = Quantization_Metrics(original, restored)
+        metrics = Quantization_Metrics([1.0, 2.0, 3.0, 4.0], [1.1, 1.8, 3.2, 3.9])
 
         self.assertAlmostEqual(metrics.mae(), 0.15)
 
@@ -57,9 +55,7 @@ class Quantization_Metrics_Test(unittest.TestCase):
 
 
     def test_mse(self): # MSE tests
-        original = [1.0, 2.0, 3.0, 4.0]
-        restored = [1.1, 1.8, 3.2, 3.9]
-        metrics = Quantization_Metrics(original, restored)
+        metrics = Quantization_Metrics([1.0, 2.0, 3.0, 4.0], [1.1, 1.8, 3.2, 3.9])
 
         self.assertAlmostEqual(metrics.mse(), 0.025)
 
@@ -71,12 +67,9 @@ class Quantization_Metrics_Test(unittest.TestCase):
 
 
     def test_rmse(self): # RMSE tests
-        expected = np.sqrt(0.025)
-        original = [1.0, 2.0, 3.0, 4.0]
-        restored = [1.1, 1.8, 3.2, 3.9]
-        metrics = Quantization_Metrics(original, restored)
+        metrics = Quantization_Metrics([1.0, 2.0, 3.0, 4.0], [1.1, 1.8, 3.2, 3.9])
 
-        self.assertAlmostEqual(metrics.rmse(), expected)
+        self.assertAlmostEqual(metrics.rmse(), np.sqrt(0.025))
 
 
     def test_mse_identical_arrays(self):
@@ -86,9 +79,7 @@ class Quantization_Metrics_Test(unittest.TestCase):
 
 
     def test_max_error(self): # Max Error tests
-        original = [1.0, 2.0, 3.0, 4.0]
-        restored = [1.1, 1.8, 3.2, 3.9]
-        metrics = Quantization_Metrics(original, restored)
+        metrics = Quantization_Metrics([1.0, 2.0, 3.0, 4.0], [1.1, 1.8, 3.2, 3.9])
 
         self.assertAlmostEqual(metrics.max_error(), 0.2)
 

@@ -27,15 +27,15 @@ class C_Generator:
             raise ValueError("Zero point must be in INT8 range!")
 
         with open(filename, "w") as file:
-            file.write("#include <stdint.h>\n\n")
+            file.write("#include <stdint.h>\n\n\n")
 
             file.write("const int8_t quantized_data[] = {\n")
 
             values = ", ".join(map(str, data.flatten()))
 
             file.write(f"    {values}\n")
-            file.write("};\n\n")
+            file.write("};\n\n\n")
 
+            file.write(f"const unsigned int data_size = {data.size};\n\n")
             file.write(f"const float scale = {scale}f;\n")
             file.write(f"const int zero_point = {zero_point};\n")
-            file.write(f"const unsigned int data_size = {data.size};\n")
