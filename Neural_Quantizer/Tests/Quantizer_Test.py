@@ -32,6 +32,7 @@ class Quantizer_Test(unittest.TestCase):
         with self.assertRaises((TypeError)):
             Quantizer([1.0 + 2j], [1.0 + 2j])
 
+
     def test_non_numeric_input(self):
         with self.assertRaises(TypeError):
             Quantizer(["a", "b", "c"], 0.1, 0)
@@ -39,7 +40,17 @@ class Quantizer_Test(unittest.TestCase):
 
     def test_inf_input(self):
         with self.assertRaises(ValueError):
-            Quantizer([1.0, np.inf, 2.0])
+            Quantizer(1.0, np.inf, 2.0)
+
+
+    def test_wrong_float32_range_values(self):
+        with self.assertRaises(ValueError):
+            Quantizer(3.5e38, 1.0, 3.0)
+
+
+    def test_wrong_int8_range_values(self):
+        with self.assertRaises(ValueError):
+            Quantizer([1.0, 2.0], 1246, -87654)
 
 
     def test_symmetric_scale(self): # Symmetric calibration tests

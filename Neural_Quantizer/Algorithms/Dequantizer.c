@@ -9,7 +9,7 @@
 #define DEQUANTIZATION_INVALID_SCALE -3
 
 
-int symmetric_dequantizer(const int8_t *quantized_data, float *dequantized_data, unsigned int size, float scale)
+int symmetric_dequantize(const int8_t *quantized_data, float *dequantized_data, unsigned int size, float scale)
 {
     if (quantized_data == NULL || dequantized_data == NULL)
     {
@@ -35,7 +35,7 @@ int symmetric_dequantizer(const int8_t *quantized_data, float *dequantized_data,
 }
 
 
-int asymmetric_dequantizer(const int8_t *quantized_data, float *dequantized_data, unsigned int size, float scale, int8_t zero_point)
+int asymmetric_dequantize(const int8_t *quantized_data, float *dequantized_data, unsigned int size, float scale, int8_t zero_point)
 {
     if (quantized_data == NULL || dequantized_data == NULL)
     {

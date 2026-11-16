@@ -5,24 +5,31 @@ class Quantizer:
 
 
     def __init__(self, data, q_min=-127, q_max=127):
-        input_data = np.asarray(data)
+        data = np.asarray(data)
 
-        if input_data.size == 0:
+        if data.size == 0:
             raise ValueError("Input data cannot be empty!")
 
-        if not np.issubdtype(input_data.dtype, np.number):
+        if not np.issubdtype(data.dtype, np.number):
             raise TypeError("Input data must contain numeric values!")
 
-        if np.iscomplexobj(input_data):
+        if np.iscomplexobj(data):
             raise TypeError("Complex numbers are not supported!")
         
-        if not np.all(np.isfinite(input_data)):
+        if not np.all(np.isfinite(data)):
             raise ValueError("Input data contains NaN or Inf!")
-        
-        if not (-128 <= q_min < q_max <= 127):
+
+        float32_max = np.finfo(np.float32).max
+        float32_min = np.finfo(np.float32).min
+        if data.max() > float32_max or data.min() < float32_min:
+            raise ValueError("Input data must be in FLOAT32 range!")
+
+        int8_min = np.iinfo(np.int8).min 
+        int8_max = np.iinfo(np.int8).max 
+        if not (int8_min <= q_min < q_max <= int8_max):
             raise ValueError("Invalid INT8 quantization range!")
 
-        self.data = input_data.astype(np.float32)
+        self.data = data.astype(np.float32)
         self.q_max = q_max
         self.q_min = q_min
         self.zero_point = None

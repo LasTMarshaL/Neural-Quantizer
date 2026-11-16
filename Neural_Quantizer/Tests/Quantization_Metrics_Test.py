@@ -42,6 +42,11 @@ class Quantization_Metrics_Test(unittest.TestCase):
             Quantization_Metrics([1.0, np.inf], [1.0, 2.0])
 
 
+    def test_wrong_float32_range_values(self):
+        with self.assertRaises(ValueError):
+            Quantization_Metrics([1.0, 3.5e38], [1.0, 2.0])
+
+
     def test_mae(self): # MAE tests
         metrics = Quantization_Metrics([1.0, 2.0, 3.0, 4.0], [1.1, 1.8, 3.2, 3.9])
 

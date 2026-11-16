@@ -11,8 +11,8 @@
 #define DEQUANTIZATION_INVALID_SCALE -3
 
 
-int symmetric_dequantizer(const int8_t *quantized_data, float *dequantized_data, unsigned int size, float scale);
-int asymmetric_dequantizer(const int8_t *quantized_data, float *dequantized_data, unsigned int size, float scale, int8_t zero_point);
+int symmetric_dequantize(const int8_t *quantized_data, float *dequantized_data, unsigned int size, float scale);
+int asymmetric_dequantize(const int8_t *quantized_data, float *dequantized_data, unsigned int size, float scale, int8_t zero_point);
 
 
 #endif
