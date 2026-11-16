@@ -3,7 +3,7 @@ import numpy as np
 import os
 
 
-from Algorithms.C_Generator import C_Generator
+from Files.C_Generator import C_Generator
 
 
 class TestCGenerator(unittest.TestCase):

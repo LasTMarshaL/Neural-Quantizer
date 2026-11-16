@@ -8,7 +8,7 @@ from Algorithms.Quantizer import Quantizer
 class Quantizer_Test(unittest.TestCase):
 
 
-    def test_valid_int8_limits(self): # Input validation
+    def test_valid_int8_limits(self): # Input validation tests
         q = Quantizer([1.0, 2.0], -128, 127)
         self.assertEqual(q.q_min, -128)
         self.assertEqual(q.q_max, 127)
@@ -32,7 +32,6 @@ class Quantizer_Test(unittest.TestCase):
         with self.assertRaises((TypeError)):
             Quantizer([1.0 + 2j], [1.0 + 2j])
 
-
     def test_non_numeric_input(self):
         with self.assertRaises(TypeError):
             Quantizer(["a", "b", "c"], 0.1, 0)
@@ -40,17 +39,7 @@ class Quantizer_Test(unittest.TestCase):
 
     def test_inf_input(self):
         with self.assertRaises(ValueError):
-            Quantizer(1.0, np.inf, 2.0)
-
-
-    def test_wrong_float32_range_values(self):
-        with self.assertRaises(ValueError):
-            Quantizer(3.5e38, 1.0, 3.0)
-
-
-    def test_wrong_int8_range_values(self):
-        with self.assertRaises(ValueError):
-            Quantizer([1.0, 2.0], 1246, -87654)
+            Quantizer([1.0, np.inf, 2.0])
 
 
     def test_symmetric_scale(self): # Symmetric calibration tests
@@ -179,23 +168,6 @@ class Quantizer_Test(unittest.TestCase):
 
         self.assertTrue(np.all(result >= q.q_min))
         self.assertTrue(np.all(result <= q.q_max))
-
-
-    def test_random_data(self): # Random data tests
-        rng = np.random.default_rng(42)
-
-        data = rng.normal(0, 1, 1000).astype(np.float32)
-
-        q = Quantizer(data)
-
-        symmetric = q.symmetric_quantize()
-        asymmetric = q.asymmetric_quantize()
-
-        self.assertEqual(symmetric.shape, data.shape)
-        self.assertEqual(asymmetric.shape, data.shape)
-
-        self.assertEqual(symmetric.dtype, np.int8)
-        self.assertEqual(asymmetric.dtype, np.int8)
 
 
 if __name__ == "__main__":

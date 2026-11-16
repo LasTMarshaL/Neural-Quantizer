@@ -8,7 +8,7 @@ from Algorithms.Dequantizer import Dequantizer
 class Dequantizer_Test(unittest.TestCase):
 
 
-    def test_empty_input(self): # Input Validation
+    def test_empty_input(self): # Input validation tests
         with self.assertRaises(ValueError):
             Dequantizer([], 0.1, 0)
 

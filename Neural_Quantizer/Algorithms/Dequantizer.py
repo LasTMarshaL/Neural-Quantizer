@@ -25,7 +25,7 @@ class Dequantizer:
         int8_min = np.iinfo(np.int8).min 
         int8_max = np.iinfo(np.int8).max 
         if quantized_data.max() > int8_max or quantized_data.min() < int8_min:
-            raise ValueError("Zero point must be in INT8 range!")
+            raise ValueError("Quantized data must be in INT8 range!")
 
         if not isinstance(scale, (int, float, np.integer, np.floating)):
             raise TypeError("Scale must be numeric!")

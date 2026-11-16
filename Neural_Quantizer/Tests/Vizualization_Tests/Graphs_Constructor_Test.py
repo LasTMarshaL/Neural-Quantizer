@@ -2,6 +2,7 @@ import unittest
 import matplotlib
 matplotlib.use("Agg")
 
+
 import matplotlib.pyplot as plt
 import numpy as np
 import tempfile
@@ -15,9 +16,8 @@ class Graphs_Constructor_Test(unittest.TestCase):
 
 
     def test_empty_data(self): # Input validation tests
-        with self.assertRaises(ValueError):
-            graphs = Graphs_Constructor()       
-            graphs.visualize_quantization(
+        with self.assertRaises(ValueError):    
+            Graphs_Constructor().visualize_quantization(
                 [],
                 [1.1, 2.1, 2.9, 4.1],
                 [1.0, 2.0, 3.1, 4.0],
@@ -27,9 +27,8 @@ class Graphs_Constructor_Test(unittest.TestCase):
 
 
     def test_different_shapes(self):
-        with self.assertRaises(ValueError):
-            graphs = Graphs_Constructor()        
-            graphs.visualize_quantization(
+        with self.assertRaises(ValueError):  
+            Graphs_Constructor().visualize_quantization(
                 [1],
                 [1.1, 2.1, 2.9, 4.1],
                 [1.0, 2.0, 3.1, 4.0],
@@ -39,9 +38,8 @@ class Graphs_Constructor_Test(unittest.TestCase):
 
 
     def test_non_numeric_data(self):
-        with self.assertRaises(TypeError):
-            graphs = Graphs_Constructor()        
-            graphs.visualize_quantization(
+        with self.assertRaises(TypeError):      
+            Graphs_Constructor().visualize_quantization(
                 ["a", "b", "c", "d"],
                 [1.1, 2.1, 2.9, 4.1],
                 [1.0, 2.0, 3.1, 4.0],
@@ -51,9 +49,8 @@ class Graphs_Constructor_Test(unittest.TestCase):
 
 
     def test_complex_data(self):
-        with self.assertRaises(TypeError):
-            graphs = Graphs_Constructor()        
-            graphs.visualize_quantization(
+        with self.assertRaises(TypeError):     
+            Graphs_Constructor().visualize_quantization(
                 [1+2j, 2+3j, 3+4j, 4+5j],
                 [1.1, 2.1, 2.9, 4.1],
                 [1.0, 2.0, 3.1, 4.0],
@@ -64,8 +61,7 @@ class Graphs_Constructor_Test(unittest.TestCase):
 
     def test_nan_data(self):
         with self.assertRaises(ValueError):
-            graphs = Graphs_Constructor()    
-            graphs.visualize_quantization(
+            Graphs_Constructor().visualize_quantization(
                 [1.0, np.nan, 3.0, 4.0],
                 [1.1, 2.1, 2.9, 4.1],
                 [1.0, 2.0, 3.1, 4.0],
@@ -75,9 +71,8 @@ class Graphs_Constructor_Test(unittest.TestCase):
 
 
     def test_inf_data(self):
-        with self.assertRaises(ValueError):
-            graphs = Graphs_Constructor()    
-            graphs.visualize_quantization(
+        with self.assertRaises(ValueError): 
+            Graphs_Constructor().visualize_quantization(
                 [1.0, 2.0, 3.0, 4.0],
                 [1.1, 2.1, np.inf, 4.1],
                 [1.0, 2.0, 3.1, 4.0],
@@ -88,8 +83,7 @@ class Graphs_Constructor_Test(unittest.TestCase):
 
     def test_float32_range(self):
         with self.assertRaises(ValueError):
-            graphs = Graphs_Constructor()    
-            graphs.visualize_quantization(
+            Graphs_Constructor().visualize_quantization(
                 [1.0, 2.0, 3.0, 3.5e38],
                 [1.1, 2.1, 2.9, 4.1],
                 [1.0, 2.0, 3.1, 4.0],
@@ -100,8 +94,7 @@ class Graphs_Constructor_Test(unittest.TestCase):
 
     def test_invalid_metrics_type(self):
         with self.assertRaises(ValueError):
-            graphs = Graphs_Constructor()    
-            graphs.visualize_quantization(
+            Graphs_Constructor().visualize_quantization(
                 [1.0, 2.0, 3.0, 3.5e38],
                 [1.1, 2.1, 2.9, 4.1],
                 [1.0, 2.0, 3.1, 4.0],
@@ -112,8 +105,7 @@ class Graphs_Constructor_Test(unittest.TestCase):
 
     def test_missing_metric(self):
         with self.assertRaises(ValueError):
-            graphs = Graphs_Constructor()
-            graphs.visualize_quantization(
+            Graphs_Constructor().visualize_quantization(
                 [1.0, 2.0, 3.0, 4.0],
                 [1.1, 2.1, 2.9, 4.1],
                 [1.0, 2.0, 3.1, 4.0],
@@ -124,8 +116,7 @@ class Graphs_Constructor_Test(unittest.TestCase):
 
     def test_negative_metric(self):
         with self.assertRaises(ValueError):
-            graphs = Graphs_Constructor()
-            graphs.visualize_quantization(
+            Graphs_Constructor().visualize_quantization(
                 [1.0, 2.0, 3.0, 4.0],
                 [1.1, 2.1, 2.9, 4.1],
                 [1.0, 2.0, 3.1, 4.0],
@@ -136,8 +127,7 @@ class Graphs_Constructor_Test(unittest.TestCase):
 
     def test_invalid_saving_path(self):
         with self.assertRaises(TypeError):
-            graphs = Graphs_Constructor()
-            graphs.visualize_quantization(
+            Graphs_Constructor().visualize_quantization(
                 [1.0, 2.0, 3.0, 4.0],
                 [1.1, 2.1, 2.9, 4.1],
                 [1.0, 2.0, 3.1, 4.0],
@@ -150,8 +140,7 @@ class Graphs_Constructor_Test(unittest.TestCase):
     def test_visualize_quantization(self): # Visualization tests
         plt.show = lambda: None
 
-        graphs = Graphs_Constructor()
-        graphs.visualize_quantization(
+        Graphs_Constructor().visualize_quantization(
             [1.0, 2.0, 3.0, 4.0],
             [1.1, 2.1, 2.9, 4.1],
             [1.0, 2.0, 3.1, 4.0],
@@ -165,9 +154,8 @@ class Graphs_Constructor_Test(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as directory:
             saving_path = os.path.join(directory, "test_graph.png")
-
-            graphs = Graphs_Constructor()    
-            graphs.visualize_quantization(
+ 
+            Graphs_Constructor().visualize_quantization(
                 [1.0, 2.0, 3.0, 4.0],
                 [1.1, 2.1, 2.9, 4.1],
                 [1.0, 2.0, 3.1, 4.0],

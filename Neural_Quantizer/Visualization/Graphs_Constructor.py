@@ -6,39 +6,8 @@ import os
 class Graphs_Constructor:
 
 
-    def plot_dequantization(self, ax, original_data, dequantized_data_python, dequantized_data_c):
-        ax.plot(original_data, label="Original Data", linewidth=1.5)
-        ax.plot(dequantized_data_python, label="Dequantized Data Python", linewidth=1)
-        ax.plot(dequantized_data_c, label="Dequantized Data C", linewidth=1)
-
-        ax.set_title("Original VS Dequantized Data (Python VS C)")
-        ax.set_xlabel("Index")
-        ax.set_ylabel("Value")
-        ax.legend()
-        ax.grid()
-
-
-    def plot_metrics(self, ax, metrics_python, metrics_c):
-        names = ["MAE", "MSE", "RMSE", "Max Error"]
-
-        python_values = [metrics_python["mae"], metrics_python["mse"], metrics_python["rmse"], metrics_python["max_error"]]
-        c_values = [metrics_c["mae"], metrics_c["mse"], metrics_c["rmse"], metrics_c["max_error"]]
-
-        column_groups_number = np.arange(len(names))
-        column_width = 0.35
-
-        ax.bar(column_groups_number - column_width / 2, python_values, column_width, label="Python")
-        ax.bar(column_groups_number + column_width / 2, c_values, column_width, label="C")
-
-        ax.set_title("Metrics Comparison")
-        ax.set_ylabel("Error")
-        ax.set_xticks(column_groups_number)
-        ax.set_xticklabels(names)
-        ax.legend()
-        ax.grid()
-
-
-    def visualize_quantization(self, original_data, dequantized_data_python, dequantized_data_c, metrics_python, metrics_c, saving_path=None):
+    @staticmethod
+    def visualize_quantization(original_data, dequantized_data_python, dequantized_data_c, metrics_python, metrics_c, saving_path=None):
         original_data = np.asarray(original_data)
         dequantized_data_python = np.asarray(dequantized_data_python)
         dequantized_data_c = np.asarray(dequantized_data_c)
@@ -82,8 +51,38 @@ class Graphs_Constructor:
 
         figure, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-        self.plot_dequantization(axes[0], original_data, dequantized_data_python, dequantized_data_c)
-        self.plot_metrics(axes[1], metrics_python, metrics_c)
+        def plot_dequantization(ax, original_data, dequantized_data_python, dequantized_data_c):
+            ax.plot(original_data, label="Original Data", linewidth=1.5)
+            ax.plot(dequantized_data_python, label="Dequantized Data Python", linewidth=1)
+            ax.plot(dequantized_data_c, label="Dequantized Data C", linewidth=1)
+
+            ax.set_title("Original VS Dequantized Data (Python VS C)")
+            ax.set_xlabel("Index")
+            ax.set_ylabel("Value")
+            ax.legend()
+            ax.grid()
+
+        def plot_metrics(ax, metrics_python, metrics_c):
+            names = ["MAE", "MSE", "RMSE", "Max Error"]
+
+            python_values = [metrics_python["mae"], metrics_python["mse"], metrics_python["rmse"], metrics_python["max_error"]]
+            c_values = [metrics_c["mae"], metrics_c["mse"], metrics_c["rmse"], metrics_c["max_error"]]
+
+            column_groups_number = np.arange(len(names))
+            column_width = 0.35
+
+            ax.bar(column_groups_number - column_width / 2, python_values, column_width, label="Python")
+            ax.bar(column_groups_number + column_width / 2, c_values, column_width, label="C")
+
+            ax.set_title("Metrics Comparison")
+            ax.set_ylabel("Error")
+            ax.set_xticks(column_groups_number)
+            ax.set_xticklabels(names)
+            ax.legend()
+            ax.grid()
+
+        plot_dequantization(axes[0], original_data, dequantized_data_python, dequantized_data_c)
+        plot_metrics(axes[1], metrics_python, metrics_c)
 
         figure.suptitle("INT8 Quantization Analysis", fontsize=16)
         figure.tight_layout()
