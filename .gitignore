@@ -182,3 +182,4 @@ cython_debug/
 Neural_Quantizer/.vscode/c_cpp_properties.json
 Neural_Quantizer/test_output.c
 Neural_Quantizer/test.exe
+Neural_Quantizer\.vscode\settings.json
