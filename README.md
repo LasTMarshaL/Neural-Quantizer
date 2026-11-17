@@ -26,6 +26,5 @@ The project implements quantization algorithms in Python, generates C source and
 *  Visual Sudio Code (Development environment)
 * C (Dequantization algorithm & Tests)
 * Python (Math, Algortithms, Files, Metrics, Visualization + Tests)
-* 
 
   ## THERE WILL BE DATA AND JOB DESCRIPTION... BUT IT IS 11.42 PM AND I HAVE TO GOT TO UNIVERSITY TOMMOROW... MAY BE, I WILL WRITE IT TOMMOROW...
