@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <stdio.h>
 
-#include "../Algorithms/Dequantizer.h"
+#include "Algorithms/Dequantizer.h"
 
 
 void test_symmetric_basic(void)
