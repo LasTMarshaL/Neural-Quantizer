@@ -19,8 +19,7 @@ The project implements quantization algorithms in Python, generates C source and
 * **Tools and libaries Python**: The folowing libaries were used: numpy, os, matplotlib, ctypes, subprocess, sys, unittest
     
 ## ⚠️ Safety Notice
-*⚠️!The author bears no responsibility for the reader's actions!⚠️
-* Used tocken is not active and used as example.
+⚠️!The author bears no responsibility for the reader's actions!⚠️
 
 ## 🧪 Used Technologies & Software
 *  Visual Sudio Code (Development environment)
