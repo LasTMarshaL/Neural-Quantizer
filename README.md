@@ -10,7 +10,7 @@ The project implements quantization algorithms in Python, generates C source and
 * **`Neural_Quantizer/Files/`** - Files loading and generation.  
 * **`Neural_Quantizer/Metrics/`** - Quantization metrics calculation.
 * **`Neural_Quantizer/Tests/`** - Tests (Categories are separated by subfolders).
-* * **`Neural_Quantizer/Visualization/`** - Graphs ploting and analysis.
+* **`Neural_Quantizer/Visualization/`** - Graphs ploting and analysis.
 
 ## 💻 Short Software Overview
 * **Development environment**: Visual Sudio Code
