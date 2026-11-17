@@ -22,9 +22,7 @@ class Quantization_Metrics:
             if not np.all(np.isfinite(original_data)) or not np.all(np.isfinite(dequantized_data)):
                 raise ValueError("Original data contains NaN or Inf!")
 
-            float32_max = np.finfo(np.float32).max
-            float32_min = np.finfo(np.float32).min
-            if np.any((original_data > float32_max) | (original_data < float32_min)) or np.any((dequantized_data > float32_max) | (dequantized_data < float32_min)):
+            if np.any((original_data < np.finfo(np.float32).min) | (original_data > np.finfo(np.float32).max)) or np.any((dequantized_data < np.finfo(np.float32).min) | (dequantized_data > np.finfo(np.float32).max)):
                 raise ValueError("Input data must be in FLOAT32 range!")
 
             self.original_data = original_data.astype(np.float32)

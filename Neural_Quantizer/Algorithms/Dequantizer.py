@@ -22,9 +22,7 @@ class Dequantizer:
         if not np.issubdtype(quantized_data.dtype, np.integer):
             raise TypeError("Quantized data must contain integers!")
 
-        int8_min = np.iinfo(np.int8).min 
-        int8_max = np.iinfo(np.int8).max 
-        if quantized_data.max() > int8_max or quantized_data.min() < int8_min:
+        if quantized_data.min() < np.iinfo(np.int8).min or quantized_data.max() > np.iinfo(np.int8).max:
             raise ValueError("Quantized data must be in INT8 range!")
 
         if not isinstance(scale, (int, float, np.integer, np.floating)):

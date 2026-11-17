@@ -19,14 +19,10 @@ class Quantizer:
         if not np.all(np.isfinite(data)):
             raise ValueError("Input data contains NaN or Inf!")
 
-        float32_max = np.finfo(np.float32).max
-        float32_min = np.finfo(np.float32).min
-        if data.max() > float32_max or data.min() < float32_min:
+        if data.min() < np.finfo(np.float32).min or data.max() > np.finfo(np.float32).max:
             raise ValueError("Input data must be in FLOAT32 range!")
 
-        int8_min = np.iinfo(np.int8).min 
-        int8_max = np.iinfo(np.int8).max 
-        if not (int8_min <= q_min < q_max <= int8_max):
+        if not (np.iinfo(np.int8).min  <= q_min < q_max <= np.iinfo(np.int8).max ):
             raise ValueError("Invalid INT8 quantization range!")
 
         self.data = data.astype(np.float32)

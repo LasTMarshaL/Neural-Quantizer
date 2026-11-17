@@ -3,7 +3,7 @@ import numpy as np
 import os
 
 
-class Graphs_Constructor:
+class Visualizator:
 
 
     @staticmethod
@@ -27,9 +27,7 @@ class Graphs_Constructor:
         if not np.all(np.isfinite(original_data)) or not np.all(np.isfinite(dequantized_data_python)) or not np.all(np.isfinite(dequantized_data_c)):
             raise ValueError("Input data contains NaN or Inf!")
 
-        float32_max = np.finfo(np.float32).max
-        float32_min = np.finfo(np.float32).min
-        if any(data.max() > float32_max or data.min() < float32_min for data in [original_data, dequantized_data_python, dequantized_data_c]):
+        if any(data.min() < np.finfo(np.float32).min or data.max() > np.finfo(np.float32).max for data in [original_data, dequantized_data_python, dequantized_data_c]):
             raise ValueError("Input data must be in FLOAT32 range!")
 
         if not isinstance(metrics_python, dict) or not isinstance(metrics_c, dict):

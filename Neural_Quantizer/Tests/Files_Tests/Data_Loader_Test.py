@@ -4,7 +4,7 @@ import tempfile
 import os
 
 
-from Files.Data_Loader import DataLoader
+from Files.Data_Loader import Data_Loader
 
 
 class TestDataLoader(unittest.TestCase):
@@ -17,22 +17,25 @@ class TestDataLoader(unittest.TestCase):
             filepath = os.path.join(temporary_directory, "data.npy")
             np.save(filepath, expected)
 
-            result = DataLoader.load_data(filepath)
+            result = Data_Loader.load_data(filepath)
 
             np.testing.assert_array_equal(result, expected)
 
 
     def test_file_not_found(self):
         with self.assertRaises(FileNotFoundError):
-            DataLoader.load_data("nonexistent.npy")
+            Data_Loader.load_data("nonexistent.npy")
 
 
     def test_unsupported_extension(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
             filepath = os.path.join(temporary_directory, "data.json")
 
+            with open(filepath, "w") as file:
+                file.write("1 2 3")
+            
             with self.assertRaises(ValueError):
-                DataLoader.load_data(filepath)
+                Data_Loader.load_data(filepath)
 
 
 if __name__ == "__main__":

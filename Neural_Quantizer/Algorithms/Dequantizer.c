@@ -3,59 +3,23 @@
 #include <stddef.h>
 
 
-#define DEQUANTIZATION_SUCCESS 0
-#define DEQUANTIZATION_NULL_POINTER -1
-#define DEQUANTIZATION_INVALID_SIZE -2
-#define DEQUANTIZATION_INVALID_SCALE -3
-
-
-int symmetric_dequantize(const int8_t *quantized_data, float *dequantized_data, unsigned int size, float scale)
+int symmetric_dequantize(float *dequantized_data)
 {
-    if (quantized_data == NULL || dequantized_data == NULL)
-    {
-        return DEQUANTIZATION_NULL_POINTER;
-    }
-
-    if (size == 0)
-    {
-        return DEQUANTIZATION_INVALID_SIZE;
-    }
-
-    if (!isfinite(scale) || scale <= 0.0f)
-    {
-        return DEQUANTIZATION_INVALID_SCALE;
-    }
-
-    for (unsigned int i = 0; i < size; i++)
+    for (unsigned int i = 0; i < data_size; i++)
     {
         dequantized_data[i] = (float)quantized_data[i] * scale;
     }
 
-    return DEQUANTIZATION_SUCCESS;
+    return 0;
 }
 
 
-int asymmetric_dequantize(const int8_t *quantized_data, float *dequantized_data, unsigned int size, float scale, int8_t zero_point)
+int asymmetric_dequantize(float *dequantized_data)
 {
-    if (quantized_data == NULL || dequantized_data == NULL)
-    {
-        return DEQUANTIZATION_NULL_POINTER;
-    }
-
-    if (size == 0)
-    {
-        return DEQUANTIZATION_INVALID_SIZE;
-    }
-
-    if (!isfinite(scale) || scale <= 0.0f)
-    {
-        return DEQUANTIZATION_INVALID_SCALE;
-    }
-
-    for (unsigned int i = 0; i < size; i++)
+    for (unsigned int i = 0; i < data_size; i++)
     {
         dequantized_data[i] = ((float)quantized_data[i] - zero_point) * scale;
     }
 
-    return DEQUANTIZATION_SUCCESS;
+    return 0;
 }
