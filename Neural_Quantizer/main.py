@@ -12,7 +12,7 @@ from Files.Data_Loader import Data_Loader
 from Files.C_Generator import C_Generator
 
 from Metrics.Quantization_Metrics import Quantization_Metrics
-from Visualization.Visualizator import Visualozator
+from Visualization.Visualizator import Visualizator
 
 
 # Filepathes for compilations and generations
@@ -157,7 +157,7 @@ with open("Results.txt", "a") as file:
 
 
 # Visualization
-Visualozator.visualize_quantization(data,
+Visualizator.visualize_quantization(data,
                                     symmetric_dequantized_data_python, 
                                     symmetric_dequantized_data_c,
                                     {"mae": symmetric_quantization_metrics_c_mae, 
@@ -173,7 +173,7 @@ Visualozator.visualize_quantization(data,
                                     symmetric_visualization_saving_path
                                     )
 
-Visualozator.visualize_quantization(data,
+Visualizator.visualize_quantization(data,
                                     asymmetric_dequantized_data_python, 
                                     asymmetric_dequantized_data_c,
                                     {"mae": asymmetric_quantization_metrics_c_mae, 
